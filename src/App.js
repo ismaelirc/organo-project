@@ -3,6 +3,7 @@ import Banner from './componentes/Banner';
 import Formulario from './componentes/Formulario';
 import Time from './componentes/Time';
 import Rodape from './componentes/Rodape';
+import SectionTitle from './componentes/SectionTitle';
 
 function App() {
 
@@ -44,6 +45,8 @@ function App() {
     }
   ]
 
+  const [hideForm, setHideForm] = useState(false);
+
   const [colaboradores, setColaboradores] = useState([])
 
   const aoNovoColaboradorAdicionado = (colaborador) => {
@@ -51,11 +54,20 @@ function App() {
     setColaboradores([...colaboradores, colaborador])
   }
 
+  const toggleForm = () => {
+    console.log('chamou');
+    setHideForm(!hideForm)
+  }
+
   return (
     <div className="App">
       <Banner />
-      <Formulario times={times.map(time => time.nome)} aoColaboradorCadastrado={colaborador => aoNovoColaboradorAdicionado(colaborador)}/>
-
+      {
+        !hideForm ?
+        <Formulario times={times.map(time => time.nome)} aoColaboradorCadastrado={colaborador => aoNovoColaboradorAdicionado(colaborador)}/>
+        : null
+      }
+      <SectionTitle title="Times" aoClick={toggleForm} buttonHide="true"/>
       {times.map(time => <Time 
         key={time.nome} 
         nome={time.nome} 
